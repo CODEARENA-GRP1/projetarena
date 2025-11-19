@@ -12,10 +12,12 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - ./mongo-data:/data/db
+      - mongo-data:/data/db
+    networks:
+      - codearena-net
 
   mongo-express:
-    image: mongo-express
+    image: mongo-express:latest
     container_name: codearena-mongo-express
     restart: always
     ports:
@@ -27,13 +29,40 @@ services:
       ME_CONFIG_MONGODB_AUTH_DATABASE: admin
     depends_on:
       - mongodb
+    networks:
+      - codearena-net
 
   backend:
-    build: .       # chemin vers ton Dockerfile
+    build: ./backend
     container_name: codearena-backend
+    restart: always
     ports:
       - "8000:8000"
     environment:
-      - MONGO_URI=mongodb://omar:12345@mongodb:27017/?authSource=admin
+      MONGO_URI: mongodb://omar:12345@mongodb:27017/codearena?authSource=admin
     depends_on:
       - mongodb
+    networks:
+      - codearena-net
+
+  frontend:
+    build: ./frontend
+    container_name: codearena-frontend
+    restart: always
+    ports:
+      - "5173:5173"   # pour Vite
+      # - "3000:3000" # si CRA, décommente
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - codearena-net
+
+volumes:
+  mongo-data:
+
+networks:
+  codearena-net:
+    driver: bridge
