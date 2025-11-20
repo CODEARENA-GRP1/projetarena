@@ -1,21 +1,7 @@
-import { useEffect, useState } from "react";
+import Home from "./pages/Home";
 
 function App() {
-  const [status, setStatus] = useState("loading");
-
-  useEffect(() => {
-    fetch("http://localhost:8000/health")
-      .then(res => res.json())
-      .then(() => setStatus("ok"))
-      .catch(() => setStatus("error"));
-  }, []);
-
-  return (
-    <div style={{ padding: 50 }}>
-      <h1>CodeArena Frontend</h1>
-      <p>Backend API status : <b>{status}</b></p>
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;
