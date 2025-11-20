@@ -30,6 +30,33 @@ blacklist_collection = db["blacklist_tokens"]  # pour stocker les tokens invalid
 # ---------------------------
 app = FastAPI(title="CodeArena Auth API")
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI(title="CodeArena Auth API")
+
+# ⭐ Autoriser ton frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],  # ton frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+@app.get("/test-mongo")
+def test_mongo():
+    try:
+        count = users_collection.count_documents({})
+        return {"mongo": "ok", "users_count": count}
+    except Exception as e:
+        return {"mongo": "error", "details": str(e)}
+
+
 # ---------------------------
 # MODELES
 # ---------------------------
