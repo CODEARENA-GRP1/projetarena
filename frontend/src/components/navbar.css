@@ -1,42 +1,93 @@
+:root {
+  --primary-dark: #1E1E1E;
+  --secondary-dark: #0D0D0D;
+  --surface: #2A2A2A;
+
+  --accent: #8A00FF;
+  --accent-hover: #5E00B2;
+
+  --text-main: #FFFFFF;
+  --text-secondary: #CCCCCC;
+  --text-muted: #888888;
+}
+
+/* NAVBAR CONTAINER */
 .navbar {
-  background: black;
-  padding: 20px 40px;
+  width: 100%;
+  padding: 25px 60px;
+  background: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.logo {
-  color: white;
-  font-size: 26px;
-  font-weight: bold;
+/* LOGO */
+.navbar-left {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary-dark);
+  cursor: pointer;
 }
 
-.nav-links button {
-  margin-left: 15px;
+/* CENTER LINKS */
+.navbar-center {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  font-size: 18px;
+  margin: 0;
+  padding: 0;
 }
 
-.btn-link {
+.navbar-center li {
+  cursor: pointer;
+  color: var(--primary-dark);
+  transition: 0.3s ease;
+  font-weight: 500;
+}
+
+.navbar-center li:hover {
+  color: var(--accent);
+}
+
+/* RIGHT BUTTONS */
+.navbar-right {
+  display: flex;
+  gap: 15px;
+}
+
+/* LOGIN BUTTON */
+.btn-login {
   background: transparent;
-  color: white;
-  border: none;
-  font-size: 16px;
+  border: 2px solid var(--accent);
+  padding: 8px 18px;
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 15px;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.btn-link:hover {
-  color: #bbb;
+.btn-login:hover {
+  background: rgba(138, 0, 255, 0.1);
 }
 
-.btn-primary {
-  background: purple;
-  color: white;
+/* REGISTER BUTTON */
+.btn-register {
+  background: var(--accent);
   border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
   cursor: pointer;
+  transition: 0.3s ease;
 }
 
-.btn-primary:hover {
-  background: rgb(100, 0, 100);
+.btn-register:hover {
+  background: var(--accent-hover);
 }

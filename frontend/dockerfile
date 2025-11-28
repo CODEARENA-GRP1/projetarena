@@ -1,20 +1,28 @@
 # Image Node
-FROM node:22-alpine
+FROM node:22-alpine AS build
 
-# Dossier de travail dans le container
 WORKDIR /app
 
-# Copier package.json
+# Copier uniquement les dépendances
 COPY package*.json ./
 
-# Installer les dépendances
 RUN npm install
 
-# Copier tout le projet
-COPY . .
+# Copier juste le code source (pas toute la racine)
+COPY src ./src
+COPY public ./public
+COPY index.html .
+COPY vite.config.js .
 
-# Exposer le port 5173 (Vite) ou 3000 (CRA)
-EXPOSE 5173
+# Build du frontend
+RUN npm run build
 
-# Commande par défaut
-CMD ["npm", "run", "dev", "--", "--host"]
+# Image légère pour servir les fichiers
+FROM nginx:alpine
+
+# Copier le build final dans NGINX
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

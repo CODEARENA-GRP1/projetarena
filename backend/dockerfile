@@ -15,23 +15,20 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # ---------------------------
-# COPIER LES FICHIERS DU PROJET
+# COPIE DU FICHIER DES DÉPENDANCES
 # ---------------------------
-COPY . .
+COPY requirements.txt .
 
 # ---------------------------
 # INSTALLATION DES DÉPENDANCES
 # ---------------------------
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir \
-       fastapi \
-       uvicorn \
-       pymongo \
-       passlib[bcrypt]==1.7.4 \
-       bcrypt==4.0.1 \
-       python-jose[cryptography] \
-       python-dotenv \
-       python-multipart
+    && pip install --no-cache-dir -r requirements.txt
+
+# ---------------------------
+# COPIE DU CODE SOURCE
+# ---------------------------
+COPY main.py .
 
 # ---------------------------
 # EXPOSER LE PORT FASTAPI
@@ -41,4 +38,4 @@ EXPOSE 8000
 # ---------------------------
 # COMMANDE POUR DÉMARRER L'API
 # ---------------------------
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,36 +1,37 @@
-version: '3.10'
-
 services:
+
   mongodb:
-    image: mongo:latest
+    image: mongo:6
     container_name: codearena-mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: omar
-      MONGO_INITDB_ROOT_PASSWORD: 12345
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASS}
       MONGO_INITDB_DATABASE: codearena
     ports:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
     networks:
-      - codearena-net
+      - internal-net
 
   mongo-express:
-    image: mongo-express:latest
+    image: mongo-express:1.0.2
     container_name: codearena-mongo-express
     restart: always
     ports:
       - "8081:8081"
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: omar
-      ME_CONFIG_MONGODB_ADMINPASSWORD: 12345
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASS}
       ME_CONFIG_MONGODB_SERVER: mongodb
       ME_CONFIG_MONGODB_AUTH_DATABASE: admin
+      ME_CONFIG_BASICAUTH_USERNAME: ${ME_USER}
+      ME_CONFIG_BASICAUTH_PASSWORD: ${ME_PASS}
     depends_on:
       - mongodb
     networks:
-      - codearena-net
+      - internal-net
 
   backend:
     build: ./backend
@@ -39,30 +40,29 @@ services:
     ports:
       - "8000:8000"
     environment:
-      MONGO_URI: mongodb://omar:12345@mongodb:27017/codearena?authSource=admin
+      MONGO_URI: mongodb://${MONGO_ROOT_USER}:${MONGO_ROOT_PASS}@mongodb:27017/codearena?authSource=admin
     depends_on:
       - mongodb
     networks:
-      - codearena-net
+      - internal-net
 
   frontend:
     build: ./frontend
     container_name: codearena-frontend
     restart: always
     ports:
-      - "5173:5173"   # pour Vite
-      # - "3000:3000" # si CRA, décommente
+      - "5173:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     depends_on:
       - backend
     networks:
-      - codearena-net
+      - internal-net
 
 volumes:
   mongo-data:
 
 networks:
-  codearena-net:
+  internal-net:
     driver: bridge
