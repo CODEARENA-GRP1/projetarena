@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - develop
-      - main
   pull_request:
     branches:
       - develop
@@ -14,36 +13,61 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ----------------------------------------
+      # CHECKOUT
+      # ----------------------------------------
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # ----------------------------------------
+      # PYTHON BACKEND
+      # ----------------------------------------
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-            python-version: '3.10'
-            cache: 'pip'
+          python-version: '3.10'
+          cache: 'pip'
 
+      - name: Install backend dependencies
+        working-directory: backend
+        run: pip install -r requirements.txt
 
-      - name: Cache Maven dependencies
-        uses: actions/cache@v4
+      # ----------------------------------------
+      # NODE FRONTEND
+      # ----------------------------------------
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-maven
+          node-version: '22'
+          cache: 'npm'
 
-      - name: Build with Maven
-        run: mvn clean package -Dspring.profiles=dev
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm install
 
-      - name: Copy files via SSH
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+
+      # ----------------------------------------
+      # DEPLOYMENT : COPY FILES TO VM
+      # ----------------------------------------
+      - name: Copy files via SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.UBUNTU }}
-          source: "frontend/.jsx,backend/.py,docker-compose.yml,Dockerfile"
+          source: |
+            backend/**
+            frontend/**
+            docker-compose.yml
+            Dockerfile
           target: /opt/projetIT
-          strip_components: 0
 
+      # ----------------------------------------
+      # DEPLOYMENT : RUN ON VM
+      # ----------------------------------------
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -52,19 +76,8 @@ jobs:
           key: ${{ secrets.UBUNTU }}
           script: |
             cd /opt/projetIT
-            docker-compose down || true
-            docker-compose pull
-            docker-compose up --build -d
+            docker compose down || true
+            docker compose pull || true
+            docker compose up --build -d
             docker image prune -f
             docker ps
-
-
-
-
-
-
-
-
-
-
-            
