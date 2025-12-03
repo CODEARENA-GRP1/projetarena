@@ -8,6 +8,7 @@ FROM python:3.10-slim
 # ---------------------------
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
 # ---------------------------
 # RÉPERTOIRE DE TRAVAIL
@@ -15,23 +16,20 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # ---------------------------
-# COPIER LES FICHIERS DU PROJET
+# COPIE DES DÉPENDANCES
 # ---------------------------
-COPY . .
+COPY requirements.txt .
 
 # ---------------------------
 # INSTALLATION DES DÉPENDANCES
 # ---------------------------
 RUN pip install --upgrade pip \
-    && pip install --no-cache-dir \
-       fastapi \
-       uvicorn \
-       pymongo \
-       passlib[bcrypt]==1.7.4 \
-       bcrypt==4.0.1 \
-       python-jose[cryptography] \
-       python-dotenv \
-       python-multipart
+    && pip install --no-cache-dir -r requirements.txt
+
+# ---------------------------
+# COPIE DE TOUT LE CODE SOURCE
+# ---------------------------
+COPY . .
 
 # ---------------------------
 # EXPOSER LE PORT FASTAPI
@@ -41,4 +39,5 @@ EXPOSE 8000
 # ---------------------------
 # COMMANDE POUR DÉMARRER L'API
 # ---------------------------
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+

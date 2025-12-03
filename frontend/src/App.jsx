@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-function App() {
-  const [status, setStatus] = useState("loading");
+import Home from './pages/Home';
+import Contact from './pages/Contact';
+import Defis from './pages/Defis';
+import Profile from './pages/Profile';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
-  useEffect(() => {
-    fetch("http://localhost:8000/health")
-      .then(res => res.json())
-      .then(() => setStatus("ok"))
-      .catch(() => setStatus("error"));
-  }, []);
-
+export default function App() {
   return (
-    <div style={{ padding: 50 }}>
-      <h1>CodeArena Frontend</h1>
-      <p>Backend API status : <b>{status}</b></p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/defis" element={<Defis />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 }
-
-export default App;
