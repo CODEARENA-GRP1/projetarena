@@ -51,14 +51,13 @@ services:
     container_name: codearena-frontend
     restart: always
     ports:
-      - "5173:5173"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - "8080:80"
     depends_on:
       - backend
     networks:
       - internal-net
+
+
 
 volumes:
   mongo-data:
