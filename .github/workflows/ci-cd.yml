@@ -89,8 +89,9 @@ jobs:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.UBUNTU }}
-          source: "${{ github.workspace }}/compose.yml"
+          source: "compose.yml"
           target: /opt/projetIT
+          strip_components: 0
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.2.0
