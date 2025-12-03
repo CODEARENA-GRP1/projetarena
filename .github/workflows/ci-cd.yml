@@ -3,8 +3,8 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - devlope
-      - '**'  # toutes les branches de feature
+      - devlope        # pour staging
+      - '**'           # toutes les branches de feature
   pull_request:
     branches:
       - devlope
@@ -15,7 +15,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  
+
   # --------------------------------------------------
   # 🏗️ BUILD & PUSH DOCKER IMAGES (Backend + Frontend)
   # --------------------------------------------------
@@ -80,28 +80,18 @@ jobs:
           labels: ${{ steps.meta-frontend.outputs.labels }}
 
   # --------------------------------------------------
-  # 🚀 DEPLOY TO VM
+  # 🚀 DEPLOY TO STAGING (devlope)
   # --------------------------------------------------
-  deploy:
+  deploy-staging:
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/devlope'
+    if: github.ref == 'refs/heads/devlope'
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy compose.yml to VM
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VM_IP }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.UBUNTU }}
-          source: "compose.yml"
-          target: "/opt/projetIT"
-          strip_components: 0
-
-      - name: Deploy on VM
+      - name: Deploy staging on VM
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VM_IP }}
@@ -110,9 +100,40 @@ jobs:
           script: |
             cd /opt/projetIT
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export IMAGE_TAG=${GITHUB_SHA::7}
 
-            # Tag utilisé pour docker compose pull
-            export IMAGE_TAG=${GITHUB_SHA::7}  # 7 premiers caractères du commit
+            if [ ! -f .env ]; then
+              cp .env.example .env
+            fi
+
+            docker compose down || true
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
+            docker compose ps
+
+  # --------------------------------------------------
+  # 🚀 DEPLOY TO PRODUCTION (main)
+  # --------------------------------------------------
+  deploy-prod:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy production on VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.UBUNTU }}
+          script: |
+            cd /opt/projetIT
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export IMAGE_TAG=${GITHUB_SHA::7}
 
             if [ ! -f .env ]; then
               cp .env.example .env
