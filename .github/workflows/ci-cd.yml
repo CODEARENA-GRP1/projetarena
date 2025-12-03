@@ -91,7 +91,7 @@ jobs:
           key: ${{ secrets.UBUNTU }}
           source: "compose.yml"
           target: /opt/projetIT
-          strip_components: 0
+        
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.2.0
