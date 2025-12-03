@@ -3,7 +3,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from jose import JWTError, jwt
 from datetime import timedelta, datetime
 
-from app.models.user_model import User, Token
+from ..models.user_models import User, Token
+
 from app.utils.db import users_collection, blacklist_collection
 from app.core.security import (
     verify_password,

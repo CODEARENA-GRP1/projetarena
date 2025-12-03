@@ -6,5 +6,10 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://omar:12345@mongodb:27017/?authSour
 client = MongoClient(MONGO_URI)
 db = client["codearena"]
 
+# Collections AUTH
 users_collection = db["users"]
 blacklist_collection = db["blacklist_tokens"]
+
+# Collections CHALLENGES
+challenges_collection = db["challenges"]
+submissions_collection = db["submissions"]

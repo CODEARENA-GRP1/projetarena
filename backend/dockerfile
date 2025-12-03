@@ -8,6 +8,7 @@ FROM python:3.10-slim
 # ---------------------------
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
 # ---------------------------
 # RÉPERTOIRE DE TRAVAIL
@@ -15,7 +16,7 @@ ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 
 # ---------------------------
-# COPIE DU FICHIER DES DÉPENDANCES
+# COPIE DES DÉPENDANCES
 # ---------------------------
 COPY requirements.txt .
 
@@ -26,9 +27,9 @@ RUN pip install --upgrade pip \
     && pip install --no-cache-dir -r requirements.txt
 
 # ---------------------------
-# COPIE DU CODE SOURCE
+# COPIE DE TOUT LE CODE SOURCE
 # ---------------------------
-COPY main.py .
+COPY . .
 
 # ---------------------------
 # EXPOSER LE PORT FASTAPI
@@ -39,3 +40,4 @@ EXPOSE 8000
 # COMMANDE POUR DÉMARRER L'API
 # ---------------------------
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
