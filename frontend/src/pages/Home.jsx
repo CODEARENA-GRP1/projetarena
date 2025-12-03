@@ -4,7 +4,7 @@ import FeatureCard from "../components/FeatureCard";
 
 export default function Home() {
   return (
-    <div className="home">
+    <div className="Home">
 
       {/* ---------------- HERO ---------------- */}
       <section className="hero">
