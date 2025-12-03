@@ -9,6 +9,7 @@ export default function Home() {
       {/* ---------------- HERO ---------------- */}
       <section className="hero">
         <div className="hero-overlay"></div>
+
         <div className="hero-content">
           <h1>
             Améliorez vos compétences et <br /> affrontez les meilleurs
@@ -28,41 +29,42 @@ export default function Home() {
           <FeatureCard
             icon="🧠"
             title="Plateforme de compétition de code"
-            description="Affrontez d’autres participants sur des défis en temps réel. Les résultats s’actualisent instantanément."
+            text="Affrontez d’autres participants sur des défis en temps réel. Les résultats s’actualisent instantanément."
           />
 
           <FeatureCard
             icon="💻"
             title="Éditeur de code intégré"
-            description="Un éditeur moderne permet d’écrire, tester et soumettre du code directement depuis l’interface."
+            text="Un éditeur moderne permet d’écrire, tester et soumettre du code directement depuis l’interface."
           />
 
           <FeatureCard
             icon="🛡"
             title="Exécution sécurisée du code"
-            description="Chaque soumission est exécutée dans un conteneur isolé pour garantir sécurité et stabilité."
+            text="Chaque soumission est exécutée dans un conteneur isolé pour garantir sécurité et stabilité."
           />
 
           <FeatureCard
             icon="🌐"
             title="Support multilangage"
-            description="Python, C++, Java... Tous les langages fonctionnent dans leur conteneur dédié, cohérent et isolé."
+            text="Python, C++, Java... Conteneurs dédiés, cohérents et isolés."
           />
 
           <FeatureCard
             icon="📊"
             title="Tableau des scores dynamique"
-            description="Les scores et classements sont mis à jour automatiquement en temps réel grâce à Socket.io."
+            text="Scores mis à jour automatiquement en temps réel grâce à Socket.io."
           />
 
           <FeatureCard
             icon="👑"
             title="Gestion des concours"
-            description="Créez et gérez vos concours : problèmes, participants, scores, tout via une interface simple."
+            text="Créez et gérez vos concours : problèmes, participants et scores."
           />
 
         </div>
       </section>
+
     </div>
   );
 }

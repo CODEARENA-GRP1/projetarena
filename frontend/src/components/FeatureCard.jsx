@@ -1,5 +1,5 @@
 import React from "react";
-import "./FeatureCard.css";
+import "./FeatureCard.css"; // si le CSS est dans un dossier parent
 
 export default function FeatureCard({ icon, title, text }) {
   return (
