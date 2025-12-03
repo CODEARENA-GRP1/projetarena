@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - devlope
-      - main
+      - '**'  # toutes les branches de feature
   pull_request:
     branches:
       - devlope
+      - main
 
 env:
   REGISTRY: ghcr.io
@@ -111,7 +112,7 @@ jobs:
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             # Tag utilisé pour docker compose pull
-            export IMAGE_TAG=${{ github.ref == 'refs/heads/main' && 'latest' || 'devlope' }}
+            export IMAGE_TAG=${GITHUB_SHA::7}  # 7 premiers caractères du commit
 
             if [ ! -f .env ]; then
               cp .env.example .env
