@@ -15,7 +15,7 @@ export default function Navbar() {
 
       {/* CENTER BUTTONS */}
       <ul className="navbar-center">
-        <li onClick={() => scrollTo("home")}>Accueil</li>
+        <li onClick={() => scrollTo("Home")}>Accueil</li>
         <li onClick={() => scrollTo("mission")}>Mission</li>
         <li onClick={() => scrollTo("contact")}>Contact</li>
       </ul>
