@@ -62,10 +62,8 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend
           tags: |
             type=ref,event=branch
-            type=sha,prefix=
+            type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
-
-            
 
       - name: Build and push Frontend image
         uses: docker/build-push-action@v5
