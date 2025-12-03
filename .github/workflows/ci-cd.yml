@@ -46,7 +46,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
 
-            
+          
 
       - name: Build and push Backend image
         uses: docker/build-push-action@v5
@@ -92,8 +92,9 @@ jobs:
           host: ${{ secrets.VM_IP }}
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.UBUNTU }}
-          source: "${{ github.workspace }}/compose.yml"
-          target: /opt/projetIT
+          source: "compose.yml"
+          target: "/opt/projetIT"
+          strip_components: 0
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v1.2.0
