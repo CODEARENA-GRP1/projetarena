@@ -13,14 +13,17 @@ const features = [
 export default function Home() {
   return (
     <div className="page">
+
       <header className="hero">
+
+        {/* NAVBAR */}
         <div className="nav">
           <div className="logo">
-            <img src="/src/assets/images/logo.png" alt="Codearena" className="logo-img" />
+            <img src="/src/assets/images/logo.jpg" alt="Codearena" className="logo-img" />
             <span className="site-title">CODEARENA</span>
           </div>
 
-          {/* nav texts (non-clickable plain text as requested) */}
+          {/* nav texts */}
           <div className="nav-texts" aria-hidden="true">
             <span className="nav-text">Accueil</span>
             <span className="nav-text">Contact</span>
@@ -29,26 +32,33 @@ export default function Home() {
           </div>
 
           <div className="auth" role="group" aria-label="Authentification">
-            <Link to="/login" className="btn btn-outline" aria-label="Se connecter">Se connecter</Link>
-            <Link to="/register" className="btn btn-primary" aria-label="S'inscrire">S'inscrire</Link>
+            <Link to="/login" className="btn btn-outline">Se connecter</Link>
+            <Link to="/register" className="btn btn-primary">S'inscrire</Link>
           </div>
         </div>
 
+        {/* HERO TEXT */}
         <div className="hero-content">
           <h1>Améliorez vos compétences et affrontez les meilleurs développeurs.</h1>
           <a className="cta" href="#">Commencer</a>
         </div>
+
       </header>
 
+      {/* FEATURES SECTION */}
       <section className="features clean-features">
         <div className="container">
           <div className="cards-grid">
+
             {features.map((f, i) => (
               <article className="feature-card" key={i}>
+
                 <div
                   className="card-icon"
-                  style={{ background: ${f.color}22, borderColor: f.color }}
-                  aria-hidden="true"
+                  style={{
+                    background: `${f.color}22`,
+                    borderColor: f.color
+                  }}
                 >
                   <span className="emoji">{f.icon}</span>
                 </div>
@@ -57,18 +67,23 @@ export default function Home() {
                   <h3>{f.title}</h3>
                   <p>{f.text}</p>
                 </div>
+
               </article>
             ))}
+
           </div>
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="site-footer">
         <div className="container footer-grid">
+
           <div className="footer-brand">
             <img src="/src/assets/images/logo.png" alt="Codearena" className="footer-logo" />
             <p>Codearena — plateforme de compétition et d'apprentissage pour développeurs.</p>
           </div>
+
           <div className="footer-links">
             <h4>Liens</h4>
             <ul>
@@ -78,13 +93,16 @@ export default function Home() {
               <li><a href="#">Contact</a></li>
             </ul>
           </div>
+
           <div className="footer-contact">
             <h4>Contact</h4>
             <p>hello@codearena.example</p>
             <p>© {new Date().getFullYear()} Codearena</p>
           </div>
+
         </div>
       </footer>
+
     </div>
   );
 }
