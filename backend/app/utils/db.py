@@ -13,3 +13,5 @@ blacklist_collection = db["blacklist_tokens"]
 # Collections CHALLENGES
 challenges_collection = db["challenges"]
 submissions_collection = db["submissions"]
+
+rooms_history_collection = db["rooms_history"]
