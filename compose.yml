@@ -25,7 +25,6 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
       ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASS}
       ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_MONGODB_AUTH_DATABASE: admin
       ME_CONFIG_BASICAUTH_USERNAME: ${ME_USER}
       ME_CONFIG_BASICAUTH_PASSWORD: ${ME_PASS}
     depends_on:
@@ -34,7 +33,7 @@ services:
       - internal-net
 
   backend:
-    build: ./backend
+    image: CODEARENA-GRP1/backend:latest   # ← remplace par l'image pushée par GitHub Actions
     container_name: codearena-backend
     restart: always
     ports:
@@ -47,7 +46,7 @@ services:
       - internal-net
 
   frontend:
-    build: ./frontend
+    image: CODEARENA-GRP1/frontend:latest   # ← remplace par l'image pushée par GitHub Actions
     container_name: codearena-frontend
     restart: always
     ports:
@@ -56,8 +55,6 @@ services:
       - backend
     networks:
       - internal-net
-
-
 
 volumes:
   mongo-data:
