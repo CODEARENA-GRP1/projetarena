@@ -3,23 +3,26 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - devlope
-      - main
+      - '**'           # 🔥 Se déclenche sur TOUTES les branches
   pull_request:
     branches:
-      - devlope
+      - '**'           # 🔥 PR aussi sur toutes les branches
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
+
+  # --------------------------------------------------
+  # 🏗️ BUILD & PUSH DOCKER IMAGES (Backend + Frontend)
+  # --------------------------------------------------
   build-and-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -34,7 +37,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # ---------- BACKEND ----------
+      # ---------------- BACKEND ----------------
       - name: Extract metadata for backend
         id: meta-backend
         uses: docker/metadata-action@v5
@@ -42,13 +45,10 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/backend
           tags: |
             type=ref,event=branch
-            type=sha,prefix=
+            type=sha,prefix=sha-
             type=raw,value=latest,enable={{is_default_branch}}
 
-
-          
-
-      - name: Build and push Backend image
+      - name: Build & push backend image
         uses: docker/build-push-action@v5
         with:
           context: ./backend
@@ -57,7 +57,7 @@ jobs:
           tags: ${{ steps.meta-backend.outputs.tags }}
           labels: ${{ steps.meta-backend.outputs.labels }}
 
-      # ---------- FRONTEND ----------
+      # ---------------- FRONTEND ----------------
       - name: Extract metadata for frontend
         id: meta-frontend
         uses: docker/metadata-action@v5
@@ -65,10 +65,10 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/frontend
           tags: |
             type=ref,event=branch
-            type=sha,prefix={{branch}}-
+            type=sha,prefix=sha-
             type=raw,value=latest,enable={{is_default_branch}}
 
-      - name: Build and push Frontend image
+      - name: Build & push frontend image
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
@@ -77,26 +77,19 @@ jobs:
           tags: ${{ steps.meta-frontend.outputs.tags }}
           labels: ${{ steps.meta-frontend.outputs.labels }}
 
-  deploy:
+  # --------------------------------------------------
+  # 🚀 DEPLOY TO STAGING (branch: devlope)
+  # --------------------------------------------------
+  deploy-staging:
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/devlope'
-    
+    if: github.ref == 'refs/heads/devlope'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Copy compose.yml to VM
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.VM_IP }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.UBUNTU }}
-          source: "compose.yml"
-          target: "/opt/projetIT"
-          strip_components: 0
-
-      - name: Deploy to VM
+      - name: Deploy staging on VM
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.VM_IP }}
@@ -105,9 +98,40 @@ jobs:
           script: |
             cd /opt/projetIT
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export IMAGE_TAG=${GITHUB_SHA::7}
 
-            export GITHUB_REPOSITORY=${{ github.repository }}
-            export IMAGE_TAG=${{ github.ref == 'refs/heads/main' && 'latest' || 'devlope' }}
+            if [ ! -f .env ]; then
+              cp .env.example .env
+            fi
+
+            docker compose down || true
+            docker compose pull
+            docker compose up -d
+            docker image prune -f
+            docker compose ps
+
+  # --------------------------------------------------
+  # 🚀 DEPLOY TO PRODUCTION (branch: main)
+  # --------------------------------------------------
+  deploy-prod:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy production on VM
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VM_IP }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.UBUNTU }}
+          script: |
+            cd /opt/projetIT
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            export IMAGE_TAG=${GITHUB_SHA::7}
 
             if [ ! -f .env ]; then
               cp .env.example .env
