@@ -33,7 +33,7 @@ services:
       - internal-net
 
   backend:
-    image: CODEARENA-GRP1/backend:latest   # ← remplace par l'image pushée par GitHub Actions
+    image: ghcr.io/CODEARENA-GRP1/projetarena/backend:latest   
     container_name: codearena-backend
     restart: always
     ports:
@@ -46,7 +46,7 @@ services:
       - internal-net
 
   frontend:
-    image: CODEARENA-GRP1/frontend:latest   # ← remplace par l'image pushée par GitHub Actions
+    image: ghcr.io/CODEARENA-GRP1/projetarena/frontend:latest   
     container_name: codearena-frontend
     restart: always
     ports:
