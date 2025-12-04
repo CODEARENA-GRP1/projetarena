@@ -32,6 +32,7 @@ services:
       - mongodb
     networks:
       - internal-net
+      
 
   backend:
     build: ./backend
