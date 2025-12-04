@@ -1,30 +1,29 @@
 import "./Navbar.css";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
-
-  const scrollTo = (id) => {
-    document.getElementById(id).scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <nav className="navbar">
-      {/* LOGO */}
+      
+      {/* LEFT SIDE — Logo + Name */}
       <div className="navbar-left">
-        CodeArena
+        <img src="/logo.png" alt="logo" className="logo" />
+        <span className="brand-name">CodeArena</span>
       </div>
 
-      {/* CENTER BUTTONS */}
+      {/* CENTER LINKS */}
       <ul className="navbar-center">
-        <li onClick={() => scrollTo("Home")}>Accueil</li>
-        <li onClick={() => scrollTo("mission")}>Mission</li>
-        <li onClick={() => scrollTo("contact")}>Contact</li>
+        <li>Accueil</li>
+        <li>Mission</li>
+        <li>Contact</li>
       </ul>
 
       {/* RIGHT BUTTONS */}
       <div className="navbar-right">
-        <button className="btn-login">Se connecter</button>
-        <button className="btn-register">S'inscrire</button>
+        <Link to="/login" className="btn-login">Se connecter</Link>
+        <Link to="/register" className="btn-register">S'inscrire</Link>
       </div>
+
     </nav>
   );
 }
