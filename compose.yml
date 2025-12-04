@@ -44,6 +44,7 @@ services:
       - mongodb
     networks:
       - internal-net
+      
 
   frontend:
     image: ghcr.io/codearena-grp1/projetarena/frontend:latest   
