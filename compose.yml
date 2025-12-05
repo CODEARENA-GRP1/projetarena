@@ -34,6 +34,7 @@ services:
       - internal-net
       
 
+
   backend:
     build: ./backend
     container_name: codearena-backend
