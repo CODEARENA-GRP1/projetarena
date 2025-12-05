@@ -20,8 +20,8 @@ export default function Navbar() {
 
       {/* RIGHT BUTTONS */}
       <div className="navbar-right">
-        <Link to="/login" className="btn-login">Se connecter</Link>
-        <Link to="/register" className="btn-register">S'inscrire</Link>
+        <Link to="/Login" className="btn-login">Se connecter</Link>
+        <Link to="/Register" className="btn-register">S'inscrire</Link>
       </div>
 
     </nav>

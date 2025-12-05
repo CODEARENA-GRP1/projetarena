@@ -12,7 +12,7 @@ export default function Login() {
         <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
           <label>
             Nom d'utilisateur
-            <input type="text" name="username" required placeholder="votre_nom_utilisateur" />
+            <input type="text" name="username" required placeholder="Votre nom d'utilisateur" />
           </label>
 
           <label>

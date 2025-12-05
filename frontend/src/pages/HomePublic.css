@@ -1,0 +1,170 @@
+/*******************************************
+                HOME BASE
+*******************************************/
+.Home {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/*******************************************
+                HERO SECTION
+*******************************************/
+.hero {
+  width: 100%;
+  height: 100vh;
+
+  background: url("/background.jpg") center center/cover no-repeat;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  line-height: 1.1;
+  max-width: 780px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*******************************************
+                HERO BUTTON
+*******************************************/
+.hero-btn {
+  padding: 12px 28px;
+  border-radius: 10px;
+
+  background: #8A00FF;
+  color: white;
+  font-size: 1.1rem;
+  text-decoration: none;
+
+  font-weight: 600;
+  transition: 0.25s ease;
+}
+
+.hero-btn:hover {
+  background: #a058ff;
+  transform: translateY(-3px);
+}
+
+/*******************************************
+                FEATURES SECTION
+*******************************************/
+.features {
+  padding: 80px 100px;
+  background: #fafafa;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+/*******************************************
+                RESPONSIVE TABLETTE
+*******************************************/
+@media (max-width: 1024px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .features {
+    padding: 60px 40px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/*******************************************
+                RESPONSIVE MOBILE
+*******************************************/
+@media (max-width: 700px) {
+  .hero {
+    height: 85vh;
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+    padding: 0 10px;
+  }
+
+  .hero-btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .features {
+    padding: 40px 20px;
+  }
+}
+
+/*******************************************
+            VERY SMALL DEVICES
+*******************************************/
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.7rem;
+  }
+
+  .hero-btn {
+    font-size: 0.95rem;
+    padding: 8px 18px;
+  }
+}
+
+/* Supprime absolument tout espace autour de la page */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Empêche le conteneur Home de laisser un espace */
+.Home {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* FORCE le Hero à prendre 100% de l'écran */
+.hero {
+  width: 100vw;
+  height: 100vh;
+
+  background: url("/background.jpg") center center/cover no-repeat;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+}
