@@ -1,5 +1,4 @@
-import NavbarPrivate from "../components/NavbarPrivate";
-
+import NavbarPrivate from "../components/NavbarPrivate.jsx";
 import "./HomePrivate.css";
 
 export default function HomePrivate() {
@@ -11,7 +10,7 @@ export default function HomePrivate() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1>Bienvenue de retour sur CodeArena !</h1>
-          <a href="/profile" className="hero-btn">Voir mon profil</a>
+          <a href="/Defis" className="hero-btn">Commencer</a>
         </div>
       </section>
     </div>

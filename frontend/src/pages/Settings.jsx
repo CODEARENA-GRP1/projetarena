@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import NavbarPrivate from "../components/NavbarPrivate";
 import "./Settings.css";
 
 export default function Settings() {
@@ -7,141 +6,133 @@ export default function Settings() {
   const [twoFA, setTwoFA] = useState(false);
 
   return (
-    <div className="Home">
-      {/* NAVBAR */}
-      <NavbarPrivate />
+    <main className="settings-page-no-nav">
+      <h1 className="settings-title">Paramètres</h1>
 
-      {/* PAGE CONTENT */}
-      <main className="settings-page">
-        <h1 className="settings-title">Paramètres</h1>
+      {/* SECTION — COMPTE */}
+      <section className="settings-card">
+        <h2>Compte</h2>
 
-        {/* SECTION — COMPTE */}
-        <section className="settings-card">
-          <h2>Compte</h2>
+        <div className="field">
+          <label>Nom complet</label>
+          <input type="text" placeholder="Votre nom" />
+        </div>
 
-          <div className="field">
-            <label>Nom complet</label>
-            <input type="text" placeholder="Votre nom" />
-          </div>
+        <div className="field">
+          <label>Email</label>
+          <input type="email" placeholder="votre@email.com" />
+        </div>
 
-          <div className="field">
-            <label>Email</label>
-            <input type="email" placeholder="votre@email.com" />
-          </div>
+        <div className="field">
+          <label>Téléphone</label>
+          <input type="text" placeholder="+212 6 00 00 00 00" />
+        </div>
 
-          <div className="field">
-            <label>Téléphone</label>
-            <input type="text" placeholder="+212 6 00 00 00 00" />
-          </div>
+        <div className="field">
+          <label>Pays</label>
+          <select>
+            <option>Maroc</option>
+            <option>France</option>
+            <option>Belgique</option>
+          </select>
+        </div>
 
-          <div className="field">
-            <label>Pays</label>
-            <select>
-              <option>Maroc</option>
-              <option>France</option>
-              <option>Belgique</option>
-            </select>
-          </div>
+        <button className="btn-save">Enregistrer</button>
+      </section>
 
-          <button className="btn-save">Enregistrer</button>
-        </section>
+      {/* SECTION — SÉCURITÉ */}
+      <section className="settings-card">
+        <h2>Sécurité</h2>
 
-        {/* SECTION — SÉCURITÉ */}
-        <section className="settings-card">
-          <h2>Sécurité</h2>
+        <div className="field row-field">
+          <label>Changer le mot de passe</label>
+          <button className="btn-secondary">Modifier</button>
+        </div>
 
-          <div className="field row-field">
-            <label>Changer le mot de passe</label>
-            <button className="btn-secondary">Modifier</button>
-          </div>
+        <div className="toggle-row">
+          <span>Authentification à deux facteurs</span>
+          <input
+            type="checkbox"
+            checked={twoFA}
+            onChange={() => setTwoFA(!twoFA)}
+          />
+        </div>
 
-          <div className="toggle-row">
-            <span>Authentification à deux facteurs</span>
-            <input
-              type="checkbox"
-              checked={twoFA}
-              onChange={() => setTwoFA(!twoFA)}
-            />
-          </div>
+        <div className="divider"></div>
 
-          <div className="divider"></div>
+        <h3>Sessions actives</h3>
+        <ul className="sessions-list">
+          <li>• Chrome — Windows 10 — il y a 2 heures</li>
+          <li>• Safari — iPhone 14 — Actif</li>
+          <li>• Firefox — MacOS — il y a 1 jour</li>
+        </ul>
 
-          <h3>Sessions actives</h3>
+        <button className="btn-danger">Déconnecter toutes les sessions</button>
+      </section>
 
-          <ul className="sessions-list">
-            <li>• Chrome — Windows 10 — il y a 2 heures</li>
-            <li>• Safari — iPhone 14 — Actif</li>
-            <li>• Firefox — MacOS — il y a 1 jour</li>
-          </ul>
+      {/* SECTION — APPARENCE */}
+      <section className="settings-card">
+        <h2>Apparence</h2>
 
-          <button className="btn-danger">Déconnecter toutes les sessions</button>
-        </section>
+        <div className="toggle-row">
+          <span>Mode sombre</span>
+          <input
+            type="checkbox"
+            checked={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+          />
+        </div>
 
-        {/* SECTION — APPARENCE */}
-        <section className="settings-card">
-          <h2>Apparence</h2>
+        <div className="field">
+          <label>Taille du texte</label>
+          <select>
+            <option>Normal</option>
+            <option>Large</option>
+            <option>Très large</option>
+          </select>
+        </div>
 
-          <div className="toggle-row">
-            <span>Mode sombre</span>
-            <input
-              type="checkbox"
-              checked={darkMode}
-              onChange={() => setDarkMode(!darkMode)}
-            />
-          </div>
+        <div className="field">
+          <label>Couleur d’accent</label>
+          <select>
+            <option>Violet (par défaut)</option>
+            <option>Bleu</option>
+            <option>Rose</option>
+            <option>Orange</option>
+          </select>
+        </div>
 
-          <div className="field">
-            <label>Taille du texte</label>
-            <select>
-              <option>Normal</option>
-              <option>Large</option>
-              <option>Très large</option>
-            </select>
-          </div>
+        <button className="btn-save">Appliquer</button>
+      </section>
 
-          <div className="field">
-            <label>Couleur d’accent</label>
-            <select>
-              <option>Violet (par défaut)</option>
-              <option>Bleu</option>
-              <option>Rose</option>
-              <option>Orange</option>
-            </select>
-          </div>
+      {/* SECTION — NOTIFICATIONS */}
+      <section className="settings-card">
+        <h2>Notifications</h2>
 
-          <button className="btn-save">Appliquer</button>
-        </section>
+        <div className="toggle-row">
+          <span>Notifications par email</span>
+          <input type="checkbox" defaultChecked />
+        </div>
 
-        {/* SECTION — NOTIFICATIONS */}
-        <section className="settings-card">
-          <h2>Notifications</h2>
+        <div className="toggle-row">
+          <span>Notifications push</span>
+          <input type="checkbox" />
+        </div>
 
-          <div className="toggle-row">
-            <span>Notifications par email</span>
-            <input type="checkbox" defaultChecked />
-          </div>
+        <div className="toggle-row">
+          <span>Alertes de sécurité</span>
+          <input type="checkbox" defaultChecked />
+        </div>
 
-          <div className="toggle-row">
-            <span>Notifications push</span>
-            <input type="checkbox" />
-          </div>
+        <button className="btn-save">Enregistrer</button>
+      </section>
 
-          <div className="toggle-row">
-            <span>Alertes de sécurité</span>
-            <input type="checkbox" defaultChecked />
-          </div>
-
-          <button className="btn-save">Enregistrer</button>
-        </section>
-
-        {/* SECTION — ZONE DANGEREUSE */}
-        <section className="settings-card danger-zone">
-          <h2>Zone dangereuse</h2>
-
-          <button className="btn-warning">Désactiver le compte</button>
-          <button className="btn-danger">Supprimer définitivement</button>
-        </section>
-      </main>
-    </div>
+      {/* SECTION — ZONE DANGEREUSE */}
+      <section className="settings-card danger-zone">
+        <h2>Zone dangereuse</h2>
+        <button className="btn-warning">Désactiver le compte</button>
+        <button className="btn-danger">Supprimer définitivement</button>
+      </section>
+    </main>
   );
 }

@@ -1,11 +1,15 @@
 import "./Profile.css";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
 
 export default function Profile() {
   return (
     <main className="profile-page">
+
+      {/* BOUTON RETOUR ACCUEIL */}
+      <div className="back-home">
+        <Link to="/home" className="back-btn">← Retour à l'accueil</Link>
+      </div>
 
       {/* HEADER */}
       <div className="profile-header">
