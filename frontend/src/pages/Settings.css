@@ -1,0 +1,122 @@
+.settings-page {
+  padding: 120px 60px 40px;
+  background: #f6f7fb;
+  min-height: 100vh;
+}
+
+.settings-title {
+  font-size: 32px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.settings-card {
+  background: white;
+  padding: 26px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06);
+  margin-bottom: 26px;
+}
+
+.settings-card h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  height: 46px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 0 12px;
+  background: #f9fafb;
+  outline: none;
+  font-size: 14px;
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #7c3aed;
+  background: #ffffff;
+}
+
+/* SWITCH */
+.toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+
+/* BUTTONS */
+.btn-save {
+  background: #7c3aed;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-secondary {
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #e0e7ff;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-warning {
+  background: #fbbf24;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #111;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  padding: 10px 22px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* SESSIONS */
+.sessions-list {
+  margin: 0;
+  padding-left: 20px;
+  margin-bottom: 16px;
+  color: #4b5563;
+}
+
+/* DANGER ZONE STYLE */
+.danger-zone {
+  border-left: 4px solid #ef4444;
+}
+
+/* RESPONSIVE */
+@media (max-width: 720px) {
+  .settings-page {
+    padding: 110px 20px 30px;
+  }
+}
