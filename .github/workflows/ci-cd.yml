@@ -86,7 +86,6 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/devlope'
-    
 
     steps:
       - name: Checkout code
@@ -100,18 +99,24 @@ jobs:
           key: ${{ secrets.UBUNTU }}
           script: |
             cd /opt/projetIT
+
             echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            export IMAGE_TAG=${GITHUB_SHA::7}
+
+            # 🔥 IMPORTANT: récupérer la version à jour du repo
+            git fetch origin
+            git reset --hard origin/devlope
 
             if [ ! -f .env ]; then
               cp .env.example .env
             fi
 
+            # 🔥 PULL les images construites par GitHub Actions
             docker compose down || true
-            git reset --hard origin/devlope 
-            docker compose up -d --build  
+            docker compose pull
+            docker compose up -d --force-recreate
             docker image prune -f
             docker compose ps
+
 
   # --------------------------------------------------
   # 🚀 DEPLOY TO PRODUCTION (main)
