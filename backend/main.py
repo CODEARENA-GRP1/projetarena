@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth_routes import router as AuthRouter
 from app.routes.challenge_routes import router as ChallengeRouter
+from app.routes.competition_routes import router as CompetitionRouter
+from app.routes import test_multiplayer
+
 
 app = FastAPI(
     title="CodeArena Auth API",
@@ -29,3 +32,10 @@ def health():
 @app.get("/")
 def root():
     return {"message": "CodeArena Backend is running 🚀"}
+
+app.include_router(CompetitionRouter, prefix="/competition")
+
+
+
+
+app.include_router(test_multiplayer.router)

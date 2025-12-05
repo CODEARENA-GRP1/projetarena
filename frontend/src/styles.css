@@ -697,7 +697,7 @@ a.nav-links:focus {
   align-items:center;
   justify-content:center;
   padding:40px 20px;
-  background-image: url('/src/assets/images/background.png'); /* vérifie le fichier */
+  background-image: url('/src/assets/images/background.jpg'); /* vérifie le fichier */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
