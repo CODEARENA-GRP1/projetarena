@@ -10,7 +10,7 @@ export default function HomePublic() {
       <section className="hero">
         <div className="hero-overlay"></div>
         <div className="hero-content">
-          <h1>Améliorez vos compétences avec CodeArena</h1>
+          <h1>Améliorez vos compétences avec CcodeArena</h1>
           <a href="/login" className="hero-btn">Commencer</a>
         </div>
       </section>
