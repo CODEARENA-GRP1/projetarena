@@ -31,7 +31,8 @@ services:
     depends_on:
       - mongodb
     networks:
-      - internal-net   # <- pas d'espace en trop
+      - internal-net
+      
 
   backend:
     build: ./backend
@@ -56,6 +57,8 @@ services:
       - backend
     networks:
       - internal-net
+
+
 
 volumes:
   mongo-data:
