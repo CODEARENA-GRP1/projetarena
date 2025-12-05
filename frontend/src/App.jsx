@@ -1,29 +1,29 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 
-import Home from "./pages/Home";
+import HomePublic from "./pages/HomePublic";
+import HomePrivate from "./pages/HomePrivate";
+
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Defis from "./pages/Defis";
 import Profile from "./pages/Profile";
 
 export default function App() {
   return (
-    <>
-      <Navbar />
+    <Routes>
+      {/* Home avant connexion */}
+      <Route path="/" element={<HomePublic />} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/defis" element={<Defis />} />
-        <Route path="/profile" element={<Profile />} />
-      </Routes>
+      {/* Home après connexion */}
+      <Route path="/home" element={<HomePrivate />} />
 
-      <Footer />
-    </>
+      {/* Auth */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+
+      {/* User pages */}
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/contact" element={<Contact />} />
+    </Routes>
   );
 }
