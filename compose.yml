@@ -31,13 +31,9 @@ services:
       - mongodb
     networks:
       - internal-net
-      
-
 
   backend:
-
-    image: ghcr.io/codearena-grp1/projetarena/backend:latest  
-
+    image: ghcr.io/codearena-grp1/projetarena/backend:latest
     container_name: codearena-backend
     restart: always
     ports:
@@ -48,31 +44,20 @@ services:
       - mongodb
     networks:
       - internal-net
-      
 
   frontend:
+    # Ici, on build le frontend directement depuis le dossier local ./frontend
+    # Cela évite d'essayer de tirer l'image depuis GitHub (et les erreurs "denied")
+    build: ./frontend
 
-    build: ./frontend           # <-- build depuis le dossier local
-  container_name: codearena-frontend
-  restart: always
-  ports:
-    - "8080:80"
-  depends_on:
-    - backend
-  networks:
-    - internal-net
-
-        # image: ghcr.io/codearena-grp1/projetarena/frontend:latest  
-
-        # container_name: codearena-frontend
-        # restart: always
-        # ports:
-          # - "8080:80"
-       #  depends_on:
-         #  - backend
-       #  networks:
-          # - internal-net
-          
+    container_name: codearena-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - internal-net
 
 volumes:
   mongo-data:
