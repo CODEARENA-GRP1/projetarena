@@ -52,16 +52,27 @@ services:
 
   frontend:
 
-    image: ghcr.io/codearena-grp1/projetarena/frontend:latest  
+    build: ./frontend           # <-- build depuis le dossier local
+  container_name: codearena-frontend
+  restart: always
+  ports:
+    - "8080:80"
+  depends_on:
+    - backend
+  networks:
+    - internal-net
 
-    container_name: codearena-frontend
-    restart: always
-    ports:
-      - "8080:80"
-    depends_on:
-      - backend
-    networks:
-      - internal-net
+        # image: ghcr.io/codearena-grp1/projetarena/frontend:latest  
+
+        # container_name: codearena-frontend
+        # restart: always
+        # ports:
+          # - "8080:80"
+       #  depends_on:
+         #  - backend
+       #  networks:
+          # - internal-net
+          
 
 volumes:
   mongo-data:
