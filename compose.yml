@@ -46,7 +46,8 @@ services:
       - internal-net
 
   frontend:
-    image: ghcr.io/codearena-grp1/projetarena/frontend:latest
+    # image: ghcr.io/codearena-grp1/projetarena/frontend:latest
+    build: ./frontend
     container_name: codearena-frontend
     restart: always
     ports:
