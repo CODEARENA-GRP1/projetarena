@@ -56,6 +56,7 @@ services:
       - backend
     networks:
       - internal-net
+      
 
 volumes:
   mongo-data:
